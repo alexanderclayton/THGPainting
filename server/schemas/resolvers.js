@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models')
+const { User, Client, Project } = require('../models')
 const { signToken } = require('../utils/auth');
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 

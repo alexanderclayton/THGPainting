@@ -17,7 +17,7 @@ const clientSchema = new mongoose.Schema({
     type: String, 
     required: true 
 },
-  linkedModel: { 
+  projects: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Project' }
 });
