@@ -1,6 +1,19 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models')
 const { signToken } = require('../utils/auth');
+import { ref, listAll, getDownloadURL } from 'firebase/storage';
+
+const firebaseImages = async (projectId) => {
+  const imagesRef = ref(storage, `projects/${projectId}/files`);
+  const { items } = await listAll(imagesRef);
+  const imageUrls = await Promise.all(
+    items.map(async (item) => {
+      const url = await getDownloadURL(item);
+      return url;
+    })
+  );
+  return imageUrls;
+}
 
 const resolvers = {
     Query: {
@@ -39,6 +52,10 @@ const resolvers = {
                 console.error(err);
                 throw err;
             }
+        },
+        getImages: async (_, { projectId }) => {
+            const images = await firebaseImages(projectId);
+            return images;
         },
     },
     Mutation: {
@@ -136,6 +153,21 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        addImage: async (_, { file }) => {
+            try {
+                const { createReadStream, filename, mimetype } = await file;
+                const stream = createReadStream();
+                const storageRef = storage.ref();
+                const imageReg = storageRef.child(filename);
+                await imageReg.put(stream, {contentType: mimetype });
+
+                const url = await imageReg.getDownloadURL();
+                return url;
+            } catch (err) {
+                console.error(err);
+                throw err;
+            }
+        }
     },
 };
 

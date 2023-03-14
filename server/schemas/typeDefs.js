@@ -18,6 +18,7 @@ const typeDefs = gql`
     projectType: ProjectType!
     paid: Boolean!
     paymentType: PaymentType!
+    images: [String]
   }
   
   enum ProjectType {
@@ -52,8 +53,8 @@ const typeDefs = gql`
     updateClient(id: ID!, name: String, address: String, email: String, phone: String): Client
     deleteClient(id: ID!): Client
   
-    addProject(startDate: String!, endDate: String, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType!): Project!
-    updateProject(id: ID!, startDate: String, endDate: String, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType): Project
+    addProject(startDate: String!, endDate: String, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType!, images: [String]): Project!
+    updateProject(id: ID!, startDate: String, endDate: String, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
     deleteProject(id: ID!): Project
   
     register(name: String!, email: String!, password: String!, avatar: String): User!
