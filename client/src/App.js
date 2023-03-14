@@ -16,6 +16,12 @@ import Login from './pages/Login/Login';
 import Logout from './pages/Logout/Logout';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import Userpage from './pages/Userpage/Userpage';
+import AllProjects from './pages/AllProjects/AllProjects';
+import Project from './pages/Project/Project';
+import AllClients from './pages/AllClients/AllClients';
+import Client from './pages/Client/Client';
+
 
 
 import './App.css';
@@ -51,6 +57,13 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/userpage" element={<Userpage />} />
+          <Route path="/all-projects" element={<AllProjects />} />
+          <Route path="/project" element={<Project />} />
+          <Route path="/all-clients" element={<AllClients />} />
+          <Route path="/client" element={<Client />} />
+
+
         </Routes>
         <Footer />
       </Router>
