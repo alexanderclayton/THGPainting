@@ -29,6 +29,10 @@ const projectSchema = new mongoose.Schema({
     enum: ['cash', 'check', 'venmo'],
     required: false,
   },
+  images: {
+    type: [String],
+    required: false,
+  }
 });
 
 const Project = mongoose.model('Project', projectSchema);
