@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "thgpainting one-stop shop",
   "private": true,
+  "engines": {
+    "node": ">=16 <17"
+  },
   "scripts": {
     "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",

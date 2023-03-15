@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Client {
@@ -40,18 +40,26 @@ const typeDefs = gql`
     password: String!
     avatar: String
   }
+
+  type Image {
+    url: String
+    description: String
+  }
   
   type Query {
     getClients: [Client]!
     getClient(id: ID!): Client
     getProjects: [Project]!
     getProject(id: ID!): Project
+    getImages: [Image!]!
   }
   
   type Mutation {
     addClient(name: String!, address: String!, email: String!, phone: String!): Client!
     updateClient(id: ID!, name: String, address: String, email: String, phone: String): Client
     deleteClient(id: ID!): Client
+    addUser(name: String!, email: String!, password: String!, avatar: String): User
+    addImage(downloadURL: String!): User
   
     addProject(startDate: String!, endDate: String, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType!, images: [String]): Project!
     updateProject(id: ID!, startDate: String, endDate: String, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
@@ -60,7 +68,6 @@ const typeDefs = gql`
     register(name: String!, email: String!, password: String!, avatar: String): User!
     login(email: String!, password: String!): User!
   }
-  
 `;
 
-module.exports = typeDefs;
+export default typeDefs;

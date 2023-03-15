@@ -1,16 +1,19 @@
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const path = require('path');
-const { authMiddleware } = require('./utils/auth');
+import jwt from 'jsonwebtoken';
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import path from 'path';
+import { authMiddleware } from './utils/auth.js';
 
-const { typedefs, resolvers } = require('./schemas');
-const db = require('./config/connection');
 
-const PORT = process.env/PORT || 3001;
+import typeDefs from './schemas/typeDefs.js';
+import resolvers from './schemas/resolvers.js'
+import db from './config/connection.js';
+
+
+const PORT = process.env.PORT || 9000;
 const app = express();
 const server = new ApolloServer({
-    typedefs,
+    typeDefs,
     resolvers,
     context: authMiddleware,
 });
@@ -39,3 +42,4 @@ const startApolloServer = async () => {
 };
 
 startApolloServer();
+
