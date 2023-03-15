@@ -1,5 +1,6 @@
 {
   "name": "thgpainting-server",
+  "type": "module",
   "version": "1.0.0",
   "description": "thgpainting server",
   "main": "server.js",
@@ -18,10 +19,12 @@
   },
   "homepage": "https://github.com/alexclaytonbootcamp/THGPainting#readme",
   "dependencies": {
+    "@firebase/storage": "^0.11.2",
     "apollo-server-express": "^3.12.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "firebase": "^9.17.2",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1"

@@ -5,3 +5,4 @@ const WhyTHG = () => {
 }
 
 export default WhyTHG;
+

@@ -2,7 +2,8 @@ import AddClient from '../../components/AddClient/AddClient';
 
 const AllClients = () => {
     const handleFormSubmit = () => {
-        console.log('Added new client!')
+        console.log('Added new client!');
+        alert('Client added successfully!')
     };
 
     return (
@@ -14,3 +15,4 @@ const AllClients = () => {
 }
 
 export default AllClients;
+

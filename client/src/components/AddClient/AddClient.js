@@ -17,9 +17,7 @@ const AddClient = ({ onFormSubmit }) => {
     resolver: yupResolver(schema)
   });
 
-  const [addClient, { loading, error }] = useMutation(ADD_CLIENT, {
-    onCompleted: () => onFormSubmit(),
-  });
+  const [addClient, { loading, error }] = useMutation(ADD_CLIENT);
 
   if (loading) { console.log("Loading...")};
   if (error) { console.log (error)};
@@ -27,8 +25,7 @@ const AddClient = ({ onFormSubmit }) => {
 
   const onSubmit = async (data) => {
     try {
-      await addClient({ variables: { input: data } });
-      console.log("Client added successfully!");
+      await addClient({ variables: data });
       onFormSubmit();
     } catch (error) {
       console.error("Error adding client:", error);
@@ -67,5 +64,6 @@ const AddClient = ({ onFormSubmit }) => {
 };
 
 export default AddClient;
+
 
 

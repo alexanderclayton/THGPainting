@@ -1,6 +1,8 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Client, Project } = require('../models')
-const { signToken } = require('../utils/auth');
+import { AuthenticationError } from 'apollo-server-express';
+import User from '../models/User.js';
+import Client from '../models/Client.js';
+import Project from '../models/Project.js';
+import { signToken } from '../utils/auth.js';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 
 const firebaseImages = async (projectId) => {
@@ -155,20 +157,22 @@ const resolvers = {
         },
         addImage: async (_, { file }) => {
             try {
-                const { createReadStream, filename, mimetype } = await file;
-                const stream = createReadStream();
-                const storageRef = storage.ref();
-                const imageReg = storageRef.child(filename);
-                await imageReg.put(stream, {contentType: mimetype });
-
-                const url = await imageReg.getDownloadURL();
-                return url;
+              const { createReadStream, filename, mimetype } = await file;
+              const stream = createReadStream();
+              const storageRef = storage.ref();
+              const imageReg = storageRef.child(filename);
+              await imageReg.put(stream, {contentType: mimetype });
+          
+              const url = await imageReg.getDownloadURL();
+              return url;
             } catch (err) {
-                console.error(err);
-                throw err;
+              console.error(err);
+              throw err;
             }
-        }
+          }
+          
     },
 };
 
-module.exports = resolvers;
+export default resolvers;
+

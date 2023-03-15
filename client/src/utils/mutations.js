@@ -5,6 +5,7 @@ export const ADD_CLIENT = gql`
     addClient(input: $input) {
       id
       name
+      address
       email
       phone
     }
