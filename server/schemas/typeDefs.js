@@ -6,7 +6,7 @@ const typeDefs = gql`
     name: String!
     address: String!
     email: String!
-    phone: String!
+    phoneNumber: String!
     projects: [Project]
   }
   
@@ -55,8 +55,8 @@ const typeDefs = gql`
   }
   
   type Mutation {
-    addClient(name: String!, address: String!, email: String!, phone: String!): Client!
-    updateClient(id: ID!, name: String, address: String, email: String, phone: String): Client
+    addClient(name: String!, address: String!, email: String!, phoneNumber: String!): Client!
+    updateClient(id: ID!, name: String, address: String, email: String, phoneNumber: String): Client
     deleteClient(id: ID!): Client
     addUser(name: String!, email: String!, password: String!, avatar: String): User
     addImage(downloadURL: String!): User
