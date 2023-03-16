@@ -1,3 +1,7 @@
 .client-card {
     border: solid black 2px;
 }
+
+.client-card:hover {
+    cursor: grab;
+}

@@ -1,6 +1,11 @@
+import AddProject from '../../components/AddProject/AddProject';
+
 const Client = () => {
     return (
-        <p>Client</p>
+        <div>
+            <AddProject />
+            <p>Client</p>
+        </div>
     )
 }
 
