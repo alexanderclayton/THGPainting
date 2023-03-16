@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
 
 export const ADD_CLIENT = gql`
-  mutation AddClient($input: ClientInput!) {
-    addClient(input: $input) {
+  mutation AddClient($name: String!, $address: String!, $email: String!, $phoneNumber: String!) {
+    addClient(name: $name, address: $address, email: $email, phoneNumber: $phoneNumber) {
       id
       name
       address
       email
-      phone
+      phoneNumber
     }
   }
 `;

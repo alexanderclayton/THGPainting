@@ -19,7 +19,7 @@ const clientSchema = new mongoose.Schema({
 },
   projects: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Project' }
+    ref: 'Project' },
 });
 
 const Client = mongoose.model('Client', clientSchema);

@@ -61,9 +61,9 @@ const resolvers = {
         },
     },
     Mutation: {
-        addClient: async (_, { name, address, email, phone }) => {
+        addClient: async (_, { name, address, email, phoneNumber }) => {
             try {
-                const client = new Client({ name, address, email, phone });
+                const client = new Client({ name, address, email, phoneNumber });
                 await client.save();
                 return client;
             } catch (err) {
@@ -71,11 +71,11 @@ const resolvers = {
                 throw err;
             }
         },
-        updateClient: async (_, { id, name, address, email, phone }) => {
+        updateClient: async (_, { id, name, address, email, phoneNumber }) => {
             try {
                 const updatedClient = await Client.findByIdAndUpdate(
                     id,
-                    { name, address, email, phone },
+                    { name, address, email, phoneNumber },
                     { new: true }
                 ).populate('projects');
                 return updatedClient;
