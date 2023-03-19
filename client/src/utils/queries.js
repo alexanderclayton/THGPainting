@@ -10,3 +10,14 @@ query {
     }
   }
 `
+
+export const GET_CLIENT = gql`
+  query GetClient($name: String!) {
+    getClient(name: $name) {
+      name
+      address
+      email
+      phoneNumber
+    }
+  }
+`;

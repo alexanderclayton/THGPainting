@@ -61,7 +61,7 @@ function App() {
           <Route path="/all-projects" element={<AllProjects />} />
           <Route path="/project" element={<Project />} />
           <Route path="/all-clients" element={<AllClients />} />
-          <Route path="/client" element={<Client />} />
+          <Route path="/all-clients/client/:id" element={<Client />} />
 
 
         </Routes>
