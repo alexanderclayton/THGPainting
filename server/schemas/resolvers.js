@@ -28,9 +28,14 @@ const resolvers = {
                 throw err;
             }
         },
-        getClient: async (_, { id }) => {
+        getClient: async (_, { name }) => {
+            console.log('getClient resolver function executing...');
             try {
-                const client = await Client.findById(id).populate('projects');
+                const client = await Client.findOne({ name });
+                if(!client) {
+                    throw new Error(`No client with name: ${name} found...`);
+                }
+                await client.populate('projects');
                 return client;
             } catch (err) {
                 console.error(err);
