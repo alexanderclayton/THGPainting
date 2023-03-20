@@ -2,7 +2,7 @@ import { AuthenticationError } from 'apollo-server-express';
 import User from '../models/User.js';
 import Client from '../models/Client.js';
 import Project from '../models/Project.js';
-import { signToken } from '../utils/auth.js';
+import { signToken } from '../utils/authMiddleware.js';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 
 const firebaseImages = async (projectId) => {
@@ -100,22 +100,23 @@ const resolvers = {
                 throw err;
             }
         },
-        addProject: async (_, { startDate, endDate, clientId, projectType, paid, paymentType }) => {
+        addProject: async (_, { startDate, endDate, projectType, paid, paymentType, images }, { currentClient }) => {
             try {
-                const project = new Project({ startDate, endDate, client: clientId, projectType, paid, paymentType });
-                await project.save();
-                const client = await Client.findByIdAndUpdate(clientId, { $push: { projects: project._id } });
-                return project;
+              const project = new Project({ startDate, endDate, clientId: currentClient._id, projectType, paid, paymentType, images });
+              await project.save();
+              const client = await Client.findByIdAndUpdate(currentClient._id, { $push: { projects: project._id } });
+              return project;
             } catch (err) {
-                console.error(err);
-                throw err;
+              console.error(err);
+              throw err;
             }
-        },
-        updateProject: async (_, { id, startDate, endDate, clientId, projectType, paid, paymentType }) => {
+          },
+                   
+        updateProject: async (_, { id, startDate, endDate, clientId, projectType, paid, PaymentType }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(
                     id,
-                    { startDate, endDate, client: clientId, projectType, paid, paymentType },
+                    { startDate, endDate, client: clientId, projectType, paid, PaymentType },
                     { new: true }
                 ).populate('client');
                 return updatedProject;

@@ -15,7 +15,7 @@ const Client = () => {
   
     return (
       <div>
-        <AddProject />
+        <AddProject clientID={data?.getClient?.clientId} />
         <p>Client: {data?.getClient?.name}</p>
         <p>Address: {data?.getClient?.address}</p>
         <p>Email: {data?.getClient?.email}</p>

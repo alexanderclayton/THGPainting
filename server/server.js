@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
-import { authMiddleware } from './utils/auth.js';
+// import { authMiddleware } from './utils/authMiddleware.js';
+import { clientMiddleware } from './utils/clientMiddleware.js';
 
 
 import typeDefs from './schemas/typeDefs.js';
@@ -15,8 +16,11 @@ const app = express();
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: authMiddleware,
-});
+    context: ({ req }) => ({
+    //   ...authMiddleware(req),
+      ...clientMiddleware(req),
+    }),
+  });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
