@@ -13,8 +13,8 @@ const typeDefs = gql`
   type Project {
     id: ID!
     startDate: String!
-    endDate: String
-    client: Client!
+    endDate: String!
+    clientId: Client!
     projectType: ProjectType!
     paid: Boolean!
     paymentType: PaymentType!
@@ -61,7 +61,7 @@ const typeDefs = gql`
     addUser(name: String!, email: String!, password: String!, avatar: String): User
     addImage(downloadURL: String!): User
   
-    addProject(startDate: String!, endDate: String, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType!, images: [String]): Project!
+    addProject(startDate: String!, endDate: String, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
     updateProject(id: ID!, startDate: String, endDate: String, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
     deleteProject(id: ID!): Project
   

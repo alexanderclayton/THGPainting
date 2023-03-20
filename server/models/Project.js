@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema({
   startDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   endDate: {
-    type: Date,
+    type: String,
     required: false,
   },
-  client: {
+  clientId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client',
     required: true,

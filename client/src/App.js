@@ -18,7 +18,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Userpage from './pages/Userpage/Userpage';
 import AllProjects from './pages/AllProjects/AllProjects';
-import Project from './pages/Project/Project';
+// import Project from './pages/Project/Project';
 import AllClients from './pages/AllClients/AllClients';
 import Client from './pages/Client/Client';
 
@@ -59,7 +59,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/userpage" element={<Userpage />} />
           <Route path="/all-projects" element={<AllProjects />} />
-          <Route path="/project" element={<Project />} />
+          {/* <Route path="/project" element={<Project />} /> */}
           <Route path="/all-clients" element={<AllClients />} />
           <Route path="/all-clients/client/:id" element={<Client />} />
 
