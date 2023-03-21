@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
-// import { authMiddleware } from './utils/authMiddleware.js';
+import { authMiddleware } from './utils/authMiddleware.js';
 import { clientMiddleware } from './utils/clientMiddleware.js';
 
 
@@ -11,15 +11,16 @@ import resolvers from './schemas/resolvers.js'
 import db from './config/connection.js';
 
 const __dirname = path.resolve();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({
+    context: authMiddleware, clientMiddleware,
+    // context: ({ req }) => ({
     //   ...authMiddleware(req),
-      ...clientMiddleware(req),
-    }),
+    //   ...clientMiddleware(req),
+    // }),
   });
 
 app.use(express.urlencoded({ extended: false }));

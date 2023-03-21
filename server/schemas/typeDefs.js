@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+  scalar Date
+
   type Client {
     id: ID!
     name: String!
@@ -12,8 +14,8 @@ const typeDefs = gql`
   
   type Project {
     id: ID!
-    startDate: String!
-    endDate: String!
+    startDate: Date!
+    endDate: Date!
     clientId: Client!
     projectType: ProjectType!
     paid: Boolean!
@@ -31,6 +33,7 @@ const typeDefs = gql`
     CASH
     CHECK
     VENMO
+    NONE
   }
   
   type User {
@@ -61,8 +64,8 @@ const typeDefs = gql`
     addUser(name: String!, email: String!, password: String!, avatar: String): User
     addImage(downloadURL: String!): User
   
-    addProject(startDate: String!, endDate: String, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
-    updateProject(id: ID!, startDate: String, endDate: String, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
+    addProject(startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
+    updateProject(id: ID!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
     deleteProject(id: ID!): Project
   
     register(name: String!, email: String!, password: String!, avatar: String): User!

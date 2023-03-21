@@ -9,13 +9,15 @@ const Client = () => {
     const { loading, error, data } = useQuery(GET_CLIENT, {
       variables: { name: id }
     });
+
+    console.log("client:", typeof data?.getClient?.id)
   
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error.message}</p>;
   
     return (
       <div>
-        <AddProject clientID={data?.getClient?.clientId} />
+        <AddProject clientId={data?.getClient?.id} />
         <p>Client: {data?.getClient?.name}</p>
         <p>Address: {data?.getClient?.address}</p>
         <p>Email: {data?.getClient?.email}</p>

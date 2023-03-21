@@ -18,11 +18,13 @@ const schema = yup.object().shape({
 });
 
 const AddProject = ({ clientId, onFormSubmit }) => {
+  console.log("clientId:", typeof clientId)
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [paid, setPaid] = useState(null);
 
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+  const { register, setValue, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -31,20 +33,16 @@ const AddProject = ({ clientId, onFormSubmit }) => {
   if (error) { return <p>Error</p> }
 
   const handleStartDateChange = (date) => {
-    const formattedDate = date.toLocaleDateString("en-US");
-    console.log('Selected start date:', formattedDate, typeof formattedDate)
-    setValue('startDate', formattedDate)
+    console.log('Selected start date:', date);
+    setValue('startDate', date, { shouldValidate: true });
     setStartDate(date);
-    
   };
-  
+
   const handleEndDateChange = (date) => {
-    const formattedDate = date.toLocaleDateString("en-US");
-    console.log('Selected end date:', formattedDate, typeof formattedDate)
-    setValue('endDate', formattedDate)
+    console.log('Selected end date:', date);
+    setValue('endDate', date, { shouldValidate: true });
     setEndDate(date);
   };
-  
 
   const handleStartDateBlur = () => {
     register('startDate').onBlur();
@@ -54,9 +52,24 @@ const AddProject = ({ clientId, onFormSubmit }) => {
     register('endDate').onBlur();
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    const newValue = checked ? value === "true" : false; // set a default value of false if checkbox is not checked
+    setValue(name, newValue);
+    setPaid(newValue)
+  };
+
+  const projectTypeOptions = ["PAINTING", "CHRISTMAS_LIGHTS", "OTHER"];
+
   const onSubmit = async (data) => {
-    const { startDate, endDate, clientId, projectType, paid, paymentType, images } = data;
-    console.log('onSubmit triggered')
+    let { startDate, endDate, clientId, projectType, paid, paymentType, images } = data;
+    console.log('onSubmit triggered', data)
+    if (!images) {
+      images = []
+    }
+    if(!paymentType) {
+      paymentType = "NONE"
+    }
     try {
       await addProject({
         variables: { startDate, endDate, clientId, projectType, paid, paymentType, images },
@@ -66,60 +79,61 @@ const AddProject = ({ clientId, onFormSubmit }) => {
       console.error("Error adding project:", error);
     }
   };
-  
 
-  const projectTypeOptions = ["PAINTING", "CHRISTMAS_LIGHTS", "OTHER"];
+  const handleSubmit = (event) => {
+    event.preventDefault(); // prevent default form submission behavior
 
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
-    if (checked) {
-      setValue(name, value === "true");
-    } else {
-      setValue(name, null);
+    const formData = new FormData(event.target); // extract form data
+
+    // convert form data to JSON object
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+      data[key] = value;
     }
+
+    // Add the startDate property to the data object
+    data.startDate = startDate;
+    data.endDate = endDate;
+    data.clientId = clientId;
+    data.paid = paid;
+
+    console.log('data:', data)
+
+    onSubmit(data);
   };
 
-
-
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
-      <label htmlFor="startDate">Start Date</label>
-      <br />
-      <DatePicker
-        selected={startDate}
-        onChange={handleStartDateChange}
-        onBlur={handleStartDateBlur}
-        dateFormat="MM/dd/yyyy"
-        minDate={new Date()}
-        className={`form-control ${errors.startDate ? "is-invalid" : ""}`}
-      />
-      {errors.startDate && (
-        <div className="invalid-feedback">{errors.startDate.message}</div>
-      )}
-    </div>
-    <div className="form-group">
-      <label htmlFor="endDate">End Date</label>
-      <br />
-      <DatePicker
-        selected={endDate}
-        onChange={handleEndDateChange}
-        onBlur={handleEndDateBlur}
-        dateFormat="MM/dd/yyyy"
-        minDate={startDate}
-        className={`form-control ${errors.endDate ? "is-invalid" : ""}`}
-      />
-      {errors.endDate && (
-        <div className="invalid-feedback">{errors.endDate.message}</div>
-      )}
-    </div>
-
-      {/* <div>
-        <label>Client ID:</label>
-        <input type="text" {...register('clientId', { initialValue: clientId })} />
-        {errors.clientId && <span>{errors.clientId.message}</span>}
-      </div> */}
-
+        <label htmlFor="startDate">Start Date</label>
+        <br />
+        <DatePicker
+          selected={startDate}
+          onChange={handleStartDateChange}
+          onBlur={handleStartDateBlur}
+          dateFormat="MM/dd/yyyy"
+          minDate={new Date()}
+          className={`form-control ${errors.startDate ? "is-invalid" : ""}`}
+        />
+        {errors.startDate && (
+          <div className="invalid-feedback">{errors.startDate.message}</div>
+        )}
+      </div>
+      <div className="form-group">
+        <label htmlFor="endDate">End Date</label>
+        <br />
+        <DatePicker
+          selected={endDate}
+          onChange={handleEndDateChange}
+          onBlur={handleEndDateBlur}
+          dateFormat="MM/dd/yyyy"
+          minDate={startDate}
+          className={`form-control ${errors.endDate ? "is-invalid" : ""}`}
+        />
+        {errors.endDate && (
+          <div className="invalid-feedback">{errors.endDate.message}</div>
+        )}
+      </div>
       <div>
         <label>Project Type:</label>
         <select {...register("projectType")}>
