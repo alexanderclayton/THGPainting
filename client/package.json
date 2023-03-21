@@ -2,9 +2,9 @@
   "name": "thgpainting-client",
   "version": "1.0.0",
   "description": "thgpainting client",
-  "proxy": "http://localhost:9000",
+  "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "react-scripts start --port 9000",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

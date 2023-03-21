@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema({
   startDate: {
-    type: String,
+    type: Date,
     required: true,
   },
   endDate: {
-    type: String,
+    type: Date,
     required: false,
   },
   clientId: {
@@ -16,7 +16,7 @@ const projectSchema = new mongoose.Schema({
   },
   projectType: {
     type: String,
-    enum: ['painting', 'christmas-lights', 'other'],
+    enum: ['PAINTING', 'CHRISTMAS-LIGHTS', 'OTHER'],
     required: true,
   },
   paid: {
@@ -26,7 +26,7 @@ const projectSchema = new mongoose.Schema({
   },
   paymentType: {
     type: String,
-    enum: ['cash', 'check', 'venmo'],
+    enum: ['CASH', 'CHECK', 'VENMO', 'NONE'],
     required: false,
   },
   images: {

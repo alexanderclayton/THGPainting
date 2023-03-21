@@ -24,8 +24,9 @@ export const ADD_CLIENT = gql`
 
 export const ADD_PROJECT = gql`
   mutation addProject(
-    $startDate: String!
-    $endDate: String
+    $startDate: Date!
+    $endDate: Date
+    $clientId: ID!
     $projectType: ProjectType!
     $paid: Boolean!
     $paymentType: PaymentType!
@@ -34,6 +35,7 @@ export const ADD_PROJECT = gql`
       addProject(
         startDate: $startDate
         endDate: $endDate
+        clientId: $clientId
         projectType: $projectType
         paid: $paid
         paymentType: $paymentType

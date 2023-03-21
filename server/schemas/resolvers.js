@@ -100,17 +100,18 @@ const resolvers = {
                 throw err;
             }
         },
-        addProject: async (_, { startDate, endDate, projectType, paid, paymentType, images }, { currentClient }) => {
+        addProject: async (_, { startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
             try {
-              const project = new Project({ startDate, endDate, clientId: currentClient._id, projectType, paid, paymentType, images });
+              const project = new Project({ startDate, endDate, clientId, projectType, paid, paymentType, images });
               await project.save();
-              const client = await Client.findByIdAndUpdate(currentClient._id, { $push: { projects: project._id } });
+              const client = await Client.findByIdAndUpdate(clientId.toString(), { $push: { projects: project.id } });
               return project;
             } catch (err) {
               console.error(err);
               throw err;
             }
           },
+          
                    
         updateProject: async (_, { id, startDate, endDate, clientId, projectType, paid, PaymentType }) => {
             try {
