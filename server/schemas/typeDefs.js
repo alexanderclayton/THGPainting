@@ -16,7 +16,7 @@ const typeDefs = gql`
     id: ID!
     startDate: Date!
     endDate: Date!
-    clientId: Client!
+    clientId: ID!
     projectType: ProjectType!
     paid: Boolean!
     paymentType: PaymentType!
@@ -74,3 +74,4 @@ const typeDefs = gql`
 `;
 
 export default typeDefs;
+

@@ -44,13 +44,7 @@ export const ADD_PROJECT = gql`
           id
           startDate
           endDate
-          clientId {
-            id
-            name
-            address
-            email
-            phoneNumber
-          }
+          clientId
           projectType
           paid
           paymentType

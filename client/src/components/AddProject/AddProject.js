@@ -74,7 +74,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
       await addProject({
         variables: { startDate, endDate, clientId, projectType, paid, paymentType, images },
       });
-      onFormSubmit();
+      window.location.reload();
     } catch (error) {
       console.error("Error adding project:", error);
     }
