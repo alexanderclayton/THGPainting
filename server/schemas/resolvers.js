@@ -21,7 +21,7 @@ const resolvers = {
     Query: {
         getClients: async () => {
             try {
-                const clients = await Client.find().populate('projects');
+                const clients = await Client.find().populate('projects').exec();
                 return clients;
             } catch (err) {
                 console.error(err);
@@ -31,20 +31,20 @@ const resolvers = {
         getClient: async (_, { name }) => {
             console.log('getClient resolver function executing...');
             try {
-                const client = await Client.findOne({ name });
+                const client = await Client.findOne({ name }).populate('projects').exec();
                 if(!client) {
                     throw new Error(`No client with name: ${name} found...`);
                 }
-                await client.populate('projects');
                 return client;
             } catch (err) {
                 console.error(err);
                 throw err;
             }
         },
+          
         getProjects: async () => {
             try {
-                const projects = await Project.find().populate('client');
+                const projects = await Project.find();
                 return projects;
             } catch (err) {
                 console.error(err);
@@ -100,9 +100,9 @@ const resolvers = {
                 throw err;
             }
         },
-        addProject: async (_, { startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
+        addProject: async (_, { description, startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
             try {
-              const project = new Project({ startDate, endDate, clientId, projectType, paid, paymentType, images });
+              const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images });
               await project.save();
               const client = await Client.findByIdAndUpdate(clientId.toString(), { $push: { projects: project.id } });
               return project;
@@ -113,11 +113,11 @@ const resolvers = {
           },
           
                    
-        updateProject: async (_, { id, startDate, endDate, clientId, projectType, paid, PaymentType }) => {
+        updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, PaymentType }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(
                     id,
-                    { startDate, endDate, client: clientId, projectType, paid, PaymentType },
+                    { description, startDate, endDate, client: clientId, projectType, paid, PaymentType },
                     { new: true }
                 ).populate('client');
                 return updatedProject;

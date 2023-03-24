@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema({
+  description: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
@@ -16,7 +20,7 @@ const projectSchema = new mongoose.Schema({
   },
   projectType: {
     type: String,
-    enum: ['PAINTING', 'CHRISTMAS-LIGHTS', 'OTHER'],
+    enum: ['PAINTING', 'CHRISTMAS_LIGHTS', 'OTHER'],
     required: true,
   },
   paid: {

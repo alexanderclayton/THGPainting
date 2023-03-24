@@ -14,6 +14,7 @@ const typeDefs = gql`
   
   type Project {
     id: ID!
+    description: String!
     startDate: Date!
     endDate: Date!
     clientId: ID!
@@ -64,8 +65,8 @@ const typeDefs = gql`
     addUser(name: String!, email: String!, password: String!, avatar: String): User
     addImage(downloadURL: String!): User
   
-    addProject(startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
-    updateProject(id: ID!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
+    addProject(description: String!, startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
+    updateProject(id: ID!, description: String!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
     deleteProject(id: ID!): Project
   
     register(name: String!, email: String!, password: String!, avatar: String): User!

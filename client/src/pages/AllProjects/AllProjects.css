@@ -1,0 +1,8 @@
+.all-project-card {
+    border: solid black 3px;
+    text-decoration: none;
+}
+
+.all-project-card:hover {
+    cursor: grab;
+}

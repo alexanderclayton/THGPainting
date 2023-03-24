@@ -8,6 +8,14 @@ query {
       address
       email
       phoneNumber
+      projects {
+        startDate
+        endDate
+        projectType
+        paid
+        paymentType
+        images
+      }
     }
   }
 `
@@ -20,6 +28,28 @@ export const GET_CLIENT = gql`
       address
       email
       phoneNumber
+      projects {
+        startDate
+        endDate
+        projectType
+        paid
+        paymentType
+        images
+      }
+    }
+  }
+`;
+
+export const GET_PROJECTS = gql`
+  query {
+    getProjects {
+      description
+      startDate
+      endDate
+      projectType
+      paid
+      paymentType
+      images
     }
   }
 `;

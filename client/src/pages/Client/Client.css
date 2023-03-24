@@ -1,0 +1,7 @@
+.project-card {
+    border: solid black 3px;
+}
+
+.project-card:hover {
+    cursor: grab;
+}
