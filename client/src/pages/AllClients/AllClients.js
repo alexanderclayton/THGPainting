@@ -7,12 +7,14 @@ import './AllClients.css';
 const AllClients = () => {
 
     const { loading, error, data } = useQuery(GET_CLIENTS);
+    console.log('data:', data)
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
     const handleFormSubmit = () => {
         console.log('Added new client!');
         alert('Client added successfully!')
+        window.location.reload();
     };
 
 

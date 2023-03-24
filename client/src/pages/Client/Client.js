@@ -1,7 +1,8 @@
 import AddProject from '../../components/AddProject/AddProject';
 import { useQuery } from '@apollo/client';
 import { GET_CLIENT } from '../../utils/queries';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import './Client.css'
 
 const Client = () => {
     const { id } = useParams();
@@ -10,7 +11,7 @@ const Client = () => {
       variables: { name: id }
     });
 
-    console.log("client:", typeof data?.getClient?.id)
+    console.log('data:', data)
   
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error.message}</p>;
@@ -22,6 +23,13 @@ const Client = () => {
         <p>Address: {data?.getClient?.address}</p>
         <p>Email: {data?.getClient?.email}</p>
         <p>Phone Number: {data?.getClient?.phoneNumber}</p>
+        <p>Projects:</p>
+          {data.getClient.projects.map(project => (
+            <Link to='/' className='project-card' key={project.id}>
+              <p>{project.startDate}</p>
+              <p>{project.endDate}</p>
+            </Link>
+          ))}
       </div>
     )
   }

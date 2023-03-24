@@ -7,7 +7,7 @@ export const ADD_CLIENT = gql`
     $email: String!, 
     $phoneNumber: String!
     ) {
-      AddClient(
+      addClient(
         name: $name, 
         address: $address, 
         email: $email, 
@@ -24,6 +24,7 @@ export const ADD_CLIENT = gql`
 
 export const ADD_PROJECT = gql`
   mutation addProject(
+    $description: String!
     $startDate: Date!
     $endDate: Date
     $clientId: ID!
@@ -33,6 +34,7 @@ export const ADD_PROJECT = gql`
     $images: [String]
     ) {
       addProject(
+        description: $description
         startDate: $startDate
         endDate: $endDate
         clientId: $clientId
@@ -42,6 +44,7 @@ export const ADD_PROJECT = gql`
         images: $images
         ) {
           id
+          description
           startDate
           endDate
           clientId

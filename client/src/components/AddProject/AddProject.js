@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const schema = yup.object().shape({
+  description: yup.string().required(),
   startDate: yup.string().required(),
   endDate: yup.string().required(),
   clientId: yup.string().required(),
@@ -18,7 +19,6 @@ const schema = yup.object().shape({
 });
 
 const AddProject = ({ clientId, onFormSubmit }) => {
-  console.log("clientId:", typeof clientId)
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -62,8 +62,8 @@ const AddProject = ({ clientId, onFormSubmit }) => {
   const projectTypeOptions = ["PAINTING", "CHRISTMAS_LIGHTS", "OTHER"];
 
   const onSubmit = async (data) => {
-    let { startDate, endDate, clientId, projectType, paid, paymentType, images } = data;
-    console.log('onSubmit triggered', data)
+    let { description, startDate, endDate, clientId, projectType, paid, paymentType, images } = data;
+    console.log('New project submitted', data)
     if (!images) {
       images = []
     }
@@ -72,7 +72,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
     }
     try {
       await addProject({
-        variables: { startDate, endDate, clientId, projectType, paid, paymentType, images },
+        variables: { description, startDate, endDate, clientId, projectType, paid, paymentType, images },
       });
       window.location.reload();
     } catch (error) {
@@ -97,13 +97,16 @@ const AddProject = ({ clientId, onFormSubmit }) => {
     data.clientId = clientId;
     data.paid = paid;
 
-    console.log('data:', data)
-
     onSubmit(data);
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className='form-group'>
+        <label htmlFor='description'>Project Description</label>
+        <input type='text' {...register('description')} />
+        {errors.description && <span>{errors.description.message}</span>}
+      </div>
       <div className="form-group">
         <label htmlFor="startDate">Start Date</label>
         <br />
