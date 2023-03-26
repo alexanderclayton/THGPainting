@@ -43,6 +43,7 @@ export const GET_CLIENT = gql`
 export const GET_PROJECTS = gql`
   query {
     getProjects {
+      id
       description
       startDate
       endDate
@@ -53,3 +54,18 @@ export const GET_PROJECTS = gql`
     }
   }
 `;
+
+export const GET_PROJECT = gql`
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
+      id
+      description
+      startDate
+      endDate
+      projectType
+      paid
+      paymentType
+      images
+    }
+  }
+`

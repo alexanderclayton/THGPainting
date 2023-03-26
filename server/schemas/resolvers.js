@@ -53,7 +53,10 @@ const resolvers = {
         },
         getProject: async (_, { id }) => {
             try {
-                const project = await Project.findById(id).populate('client');
+                const project = await Project.findById(id);
+                if(!project) {
+                    throw new Error(`No project with id ${id} found...`)
+                }
                 return project;
             } catch (err) {
                 console.error(err);
