@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_PROJECTS } from '../../utils/queries';
 import { Link } from 'react-router-dom';
-import './AllProjects.css'
+import './AllProjects.css';
 
 const AllProjects = () => {
 
@@ -15,7 +15,7 @@ const AllProjects = () => {
         <div>
             <p>All Projects</p>
             {data.getProjects.map(project => (
-                <Link to='/' className='all-project-card' key={project.description}>
+                <Link to={`project/${project.id}`} className='all-project-card' key={project.id}>
                     <p>{project.description}</p>
                     <p>{project.startDate}</p>
                     <p>{project.endDate}</p>
