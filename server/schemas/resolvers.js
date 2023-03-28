@@ -19,7 +19,10 @@ const firebaseImages = async (projectId) => {
 
 const resolvers = {
     Query: {
-        getClients: async () => {
+        getClients: async (parent, { userId }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be an authorized user to view this page.');
+            }
             try {
                 const clients = await Client.find().populate('projects').exec();
                 return clients;
