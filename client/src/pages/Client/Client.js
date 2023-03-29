@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import AddProject from '../../components/AddProject/AddProject';
-import UpdateClient from '../../components/UpdateClient/UpdateClient';
 import { useQuery } from '@apollo/client';
 import { GET_CLIENT } from '../../utils/queries';
 import { useParams, Link } from 'react-router-dom';
+import AddProject from '../../components/AddProject/AddProject';
+import UpdateClient from '../../components/UpdateClient/UpdateClient';
 import './Client.css';
 
 const Client = () => {
@@ -16,8 +16,6 @@ const Client = () => {
   const { loading, error, data } = useQuery(GET_CLIENT, {
     variables: { id: id },
   });
-
-  console.log(typeof id, id)
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;

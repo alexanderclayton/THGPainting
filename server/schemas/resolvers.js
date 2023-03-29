@@ -130,13 +130,13 @@ const resolvers = {
           },
           
                    
-        updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, PaymentType }) => {
+        updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, paymentType }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(
                     id,
-                    { description, startDate, endDate, client: clientId, projectType, paid, PaymentType },
+                    { description, startDate, endDate, clientId, projectType, paid, paymentType },
                     { new: true }
-                ).populate('client');
+                );
                 return updatedProject;
             } catch (err) {
                 console.error(err);

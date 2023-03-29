@@ -62,6 +62,7 @@ export const GET_PROJECT = gql`
       description
       startDate
       endDate
+      clientId
       projectType
       paid
       paymentType

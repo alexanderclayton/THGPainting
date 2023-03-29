@@ -1,10 +1,14 @@
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_PROJECT } from '../../utils/queries';
 import { useParams } from 'react-router-dom';
+import UpdateProject from '../../components/UpdateProject/UpdateProject';
 
 const Project = () => {
+    const [showUpdateProjectForm, setShowUpdateProjectForm] = useState(false);
+    const [showUpdateProjectButton, setShowUpdateProjectButton] = useState(true);
+
     const { id } = useParams();
-    console.log(typeof id)
 
     const { loading, error, data } = useQuery(GET_PROJECT, {
         variables: { id: id }
@@ -23,7 +27,17 @@ const Project = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
 
-    console.log('Data:', data);
+    const handleUpdateProjectFormSubmit = () => {
+        setShowUpdateProjectForm(false);
+        setShowUpdateProjectButton(true);
+    };
+
+    const handleUpdateProjectButtonClick = () => {
+        setShowUpdateProjectForm(true);
+        setShowUpdateProjectButton(false);
+    };
+
+    console.log(data)
 
     return (
         <div>
@@ -34,6 +48,17 @@ const Project = () => {
             <p>Paid: {isItPaid}</p>
             <p>Payment Type: {data?.getProject?.paymentType}</p>
             <p>Images: {data?.getProject?.images}</p>
+            {showUpdateProjectForm && (
+            <UpdateProject
+                project={data?.getProject}
+                onSubmit={() => handleUpdateProjectFormSubmit()}
+            />
+            )}
+            {showUpdateProjectButton && (
+                <button onClick={() => handleUpdateProjectButtonClick()}>
+                    Update Project
+                </button>
+            )}
         </div>
     )
 }
