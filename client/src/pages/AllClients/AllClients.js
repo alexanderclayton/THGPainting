@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import AddClient from '../../components/AddClient/AddClient';
 import { useQuery } from '@apollo/client';
 import { GET_CLIENTS } from '../../utils/queries';
@@ -6,11 +7,14 @@ import './AllClients.css';
 
 const AllClients = () => {
 
+    const [showForm, setShowForm] = useState(false);
+
     const { loading, error, data } = useQuery(GET_CLIENTS);
     console.log('data:', data)
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error.message}</p>;
+
     const handleFormSubmit = () => {
         console.log('Added new client!');
         alert('Client added successfully!')
@@ -31,8 +35,10 @@ const AllClients = () => {
                     <p>{client.phoneNumber}</p>
                 </Link>
             ))}
-            <AddClient onFormSubmit={handleFormSubmit} />
-            <p>All Clients</p>
+            {showForm && <AddClient onFormSubmit={handleFormSubmit} />}
+            <button onClick={() => setShowForm(!showForm)}>
+                {showForm ? 'cancel' : 'Add Client'}
+            </button>
         </div>
     );
 }

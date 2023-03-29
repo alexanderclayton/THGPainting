@@ -20,7 +20,8 @@ const Navbar = () => {
             <li><Link to="/about">About Us</Link></li>
             <li><Link to="/why-thg">Why THG?</Link></li>
             <li><Link to="/contact">Contact Us</Link></li>
-            <li><Link to="/login">Login</Link></li>
+            {authServiceInstance.loggedIn() || <li><Link to="/login">Login</Link></li>}
+            
             {authServiceInstance.loggedIn() && (
                 <li><button onClick={handleLogout}>Logout</button></li>
             )}
