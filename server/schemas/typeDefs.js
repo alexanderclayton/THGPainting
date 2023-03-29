@@ -49,6 +49,11 @@ const typeDefs = gql`
     url: String
     description: String
   }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
   
   type Query {
     getClients: [Client]!
@@ -70,7 +75,7 @@ const typeDefs = gql`
     deleteProject(id: ID!): Project
   
     register(name: String!, email: String!, password: String!, avatar: String): User!
-    login(email: String!, password: String!): User!
+    login(email: String!, password: String!): Auth
   }
 `;
 
