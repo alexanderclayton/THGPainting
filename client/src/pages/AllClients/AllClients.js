@@ -27,8 +27,7 @@ const AllClients = () => {
         <div>
             <p>All Clients</p>
             {data.getClients.map(client => (
-                // console.log('getclient:', client);
-                <Link to={`client/${client.name}`} className="client-card" key={client.name}>
+                <Link to={`client/${client.id}`} className="client-card" key={client.id}>
                     <p>{client.name}</p>
                     <p>{client.address}</p>
                     <p>{client.email}</p>

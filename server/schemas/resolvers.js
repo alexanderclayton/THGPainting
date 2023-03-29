@@ -31,14 +31,14 @@ const resolvers = {
                 throw err;
             }
         },
-        getClient: async (_, { name }, context) => {
+        getClient: async (_, { id }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be an authorized user to view this page.');
             }
             try {
-                const client = await Client.findOne({ name }).populate('projects').exec();
+                const client = await Client.findById(id).populate('projects').exec();
                 if(!client) {
-                    throw new Error(`No client with name: ${name} found...`);
+                    throw new Error(`No client with id: ${id} found...`);
                 }
                 return client;
             } catch (err) {

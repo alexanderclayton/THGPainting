@@ -57,7 +57,7 @@ const typeDefs = gql`
   
   type Query {
     getClients: [Client]!
-    getClient(name: String!): Client
+    getClient(id: ID!): Client
     getProjects: [Project]!
     getProject(id: ID!): Project
     getImages: [Image!]!
