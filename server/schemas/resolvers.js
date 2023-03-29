@@ -31,8 +31,10 @@ const resolvers = {
                 throw err;
             }
         },
-        getClient: async (_, { name }) => {
-            console.log('getClient resolver function executing...');
+        getClient: async (_, { name }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be an authorized user to view this page.');
+            }
             try {
                 const client = await Client.findOne({ name }).populate('projects').exec();
                 if(!client) {
@@ -45,7 +47,10 @@ const resolvers = {
             }
         },
           
-        getProjects: async () => {
+        getProjects: async (_, {}, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be an authorized user to view this page.');
+            }
             try {
                 const projects = await Project.find();
                 return projects;
@@ -54,7 +59,10 @@ const resolvers = {
                 throw err;
             }
         },
-        getProject: async (_, { id }) => {
+        getProject: async (_, { id }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be an authorized user to view this page.');
+            }
             try {
                 const project = await Project.findById(id);
                 if(!project) {
@@ -66,7 +74,10 @@ const resolvers = {
                 throw err;
             }
         },
-        getImages: async (_, { projectId }) => {
+        getImages: async (_, { projectId }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be an authorized user to view this page.');
+            }
             const images = await firebaseImages(projectId);
             return images;
         },
