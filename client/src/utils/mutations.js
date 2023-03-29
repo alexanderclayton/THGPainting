@@ -22,6 +22,30 @@ export const ADD_CLIENT = gql`
       }
 `;
 
+export const UPDATE_CLIENT = gql`
+  mutation UpdateClient(
+    $id: ID!
+    $name: String!
+    $address: String!
+    $email: String!
+    $phoneNumber: String!
+  ) {
+    updateClient(
+      id: $id
+      name: $name
+      address: $address
+      email: $email
+      phoneNumber: $phoneNumber
+    ) {
+      id
+      name
+      address
+      email
+      phoneNumber
+    }
+  }
+`;
+
 export const ADD_PROJECT = gql`
   mutation addProject(
     $description: String!

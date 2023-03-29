@@ -21,8 +21,8 @@ query {
 `
 
 export const GET_CLIENT = gql`
-  query GetClient($name: String!) {
-    getClient(name: $name) {
+  query GetClient($id: ID!) {
+    getClient(id: $id) {
       id
       name
       address
