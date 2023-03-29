@@ -80,6 +80,42 @@ export const ADD_PROJECT = gql`
       }
 `;
 
+export const UPDATE_PROJECT = gql`
+  mutation UpdateProject(
+    $id: ID!
+    $description: String!
+    $startDate: Date!
+    $endDate: Date!
+    $clientId: ID!
+    $projectType: ProjectType!
+    $paid: Boolean!
+    $paymentType: PaymentType!
+    $images: [String]
+    ) {
+      updateProject(
+        id: $id
+        description: $description
+        startDate: $startDate
+        endDate: $endDate
+        clientId: $clientId
+        projectType: $projectType
+        paid: $paid
+        paymentType: $paymentType
+        images: $images
+        ) {
+          id
+          description
+          startDate
+          endDate
+          clientId
+          projectType
+          paid
+          paymentType
+          images
+         }
+      }
+`
+
 export const LOGIN_USER = gql`
       mutation login(
         $email: String!
