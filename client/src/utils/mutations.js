@@ -116,6 +116,14 @@ export const UPDATE_PROJECT = gql`
       }
 `
 
+export const ADD_PROJECT_IMAGE = gql`
+  mutation addProjectImage($downloadURL: String!, $projectId: ID!) {
+    addProjectImage(downloadURL: $downloadURL, projectId: $projectId) {
+      images
+    }
+  }
+`
+
 export const LOGIN_USER = gql`
       mutation login(
         $email: String!

@@ -1,21 +1,10 @@
 import { AuthenticationError } from 'apollo-server-express';
+import { UserInputError } from 'apollo-server-errors';
+import mongoose from 'mongoose';
 import User from '../models/User.js';
 import Client from '../models/Client.js';
 import Project from '../models/Project.js';
 import { signToken } from '../utils/authMiddleware.js';
-import { ref, listAll, getDownloadURL } from 'firebase/storage';
-
-const firebaseImages = async (projectId) => {
-  const imagesRef = ref(storage, `projects/${projectId}/files`);
-  const { items } = await listAll(imagesRef);
-  const imageUrls = await Promise.all(
-    items.map(async (item) => {
-      const url = await getDownloadURL(item);
-      return url;
-    })
-  );
-  return imageUrls;
-}
 
 const resolvers = {
     Query: {
@@ -37,7 +26,7 @@ const resolvers = {
             }
             try {
                 const client = await Client.findById(id).populate('projects').exec();
-                if(!client) {
+                if (!client) {
                     throw new Error(`No client with id: ${id} found...`);
                 }
                 return client;
@@ -46,8 +35,8 @@ const resolvers = {
                 throw err;
             }
         },
-          
-        getProjects: async (_, {}, context) => {
+
+        getProjects: async (_, { }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be an authorized user to view this page.');
             }
@@ -65,7 +54,7 @@ const resolvers = {
             }
             try {
                 const project = await Project.findById(id);
-                if(!project) {
+                if (!project) {
                     throw new Error(`No project with id ${id} found...`)
                 }
                 return project;
@@ -74,11 +63,11 @@ const resolvers = {
                 throw err;
             }
         },
-        getImages: async (_, { projectId }, context) => {
+        getProjectImages: async (_, { projectId }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be an authorized user to view this page.');
             }
-            const images = await firebaseImages(projectId);
+            const images = await firebaseProjectImages(projectId);
             return images;
         },
     },
@@ -119,17 +108,17 @@ const resolvers = {
         },
         addProject: async (_, { description, startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
             try {
-              const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images });
-              await project.save();
-              const client = await Client.findByIdAndUpdate(clientId.toString(), { $push: { projects: project.id } });
-              return project;
+                const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images });
+                await project.save();
+                const client = await Client.findByIdAndUpdate(clientId.toString(), { $push: { projects: project.id } });
+                return project;
             } catch (err) {
-              console.error(err);
-              throw err;
+                console.error(err);
+                throw err;
             }
-          },
-          
-                   
+        },
+
+
         updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, paymentType }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(
@@ -179,20 +168,28 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        addImage: async (_, { file }) => {
-            try {
-              const { createReadStream, filename, mimetype } = await file;
-              const stream = createReadStream();
-              const storageRef = storage.ref();
-              const imageReg = storageRef.child(filename);
-              await imageReg.put(stream, {contentType: mimetype });
-          
-              const url = await imageReg.getDownloadURL();
-              return url;
-            } catch (err) {
-              console.error(err);
-              throw err;
+        addProjectImage: async (_, {projectId, downloadURL }, context) => {
+            // First, check if the user is authenticated
+            console.log("projectId:", typeof projectId, projectId)
+            if (!context.user) {
+              throw new AuthenticationError('User must be authenticated');
             }
+            if (!mongoose.Types.ObjectId.isValid(projectId)) {
+                throw new UserInputError('Invalid projectId');
+              }
+            // Then, find the project with the given projectId
+            const project = await Project.findById(projectId);
+          
+            // If project not found, throw an error
+            if (!project) {
+              throw new UserInputError('Project not found');
+            }
+          
+            // Push the downloadURL to the images array and save the project
+            project.images.push(downloadURL);
+            const updatedProject = await project.save();
+          
+            return updatedProject;
           }
           
     },

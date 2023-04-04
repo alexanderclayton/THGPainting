@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   scalar Date
+  scalar Upload
 
   type Client {
     id: ID!
@@ -46,8 +47,9 @@ const typeDefs = gql`
   }
 
   type Image {
-    url: String
-    description: String
+    id: ID!
+    url: String!
+    name: String
   }
 
   type Auth {
@@ -60,7 +62,7 @@ const typeDefs = gql`
     getClient(id: ID!): Client
     getProjects: [Project]!
     getProject(id: ID!): Project
-    getImages: [Image!]!
+    getProjectImages: [Image!]!
   }
   
   type Mutation {
@@ -68,7 +70,7 @@ const typeDefs = gql`
     updateClient(id: ID!, name: String, address: String, email: String, phoneNumber: String): Client
     deleteClient(id: ID!): Client
     addUser(name: String!, email: String!, password: String!, avatar: String): User
-    addImage(downloadURL: String!): User
+    addProjectImage(downloadURL: String!, projectId: ID!): Project
   
     addProject(description: String!, startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
     updateProject(id: ID!, description: String!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
@@ -80,4 +82,5 @@ const typeDefs = gql`
 `;
 
 export default typeDefs;
+
 
