@@ -22,7 +22,6 @@ const AllProjects = () => {
                     <p>{project.projectType}</p>
                     <p>{project.paid}</p>
                     <p>{project.paymentType}</p>
-                    <p>{project.images}</p>
                 </Link>
             ))}
         </div>
