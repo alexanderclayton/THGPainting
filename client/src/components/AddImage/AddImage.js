@@ -29,7 +29,7 @@ const AddImage = ({ projectId }) => {
   return (
     <div>
       {imagePreview ? (
-        <img src={imagePreview} alt="preview" />
+        <img src={imagePreview} style={{ width: '200px', height: 'auto' }} alt="preview" />
       ) : (
         <div className="placeholder">Choose an image</div>
       )}

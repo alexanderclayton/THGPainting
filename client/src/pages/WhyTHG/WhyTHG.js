@@ -1,6 +1,6 @@
 const WhyTHG = () => {
     return (
-        <p>Why THG?</p>
+        <p>Why THG? text here</p>
     )
 }
 
