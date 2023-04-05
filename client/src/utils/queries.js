@@ -9,6 +9,7 @@ query {
       email
       phoneNumber
       projects {
+        id
         startDate
         endDate
         projectType
@@ -29,6 +30,7 @@ export const GET_CLIENT = gql`
       email
       phoneNumber
       projects {
+        id
         startDate
         endDate
         projectType

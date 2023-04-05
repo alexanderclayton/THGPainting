@@ -30,6 +30,8 @@ const Client = () => {
     setShowUpdateClientButton(false);
   };
 
+  console.log("data:", data?.getClient.projects)
+
   return (
     <div>
       <p>Client: {data?.getClient?.name}</p>
@@ -38,7 +40,7 @@ const Client = () => {
       <p>Phone Number: {data?.getClient?.phoneNumber}</p>
       <p>Projects:</p>
       {data.getClient.projects.map((project) => (
-        <Link to="/" className="project-card" key={project.id}>
+        <Link to={`../all-projects/project/${project.id}`} className="project-card" key={project.id}>
           <p>{project.startDate}</p>
           <p>{project.endDate}</p>
         </Link>
