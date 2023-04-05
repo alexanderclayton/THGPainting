@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
-import { UPDATE_PROJECT } from '../../utils/mutations';
+import { UPDATE_PROJECT, DELETE_PROJECT } from '../../utils/mutations';
+import { useFileUpload } from '../../utils/firebaseHelpers';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AddImage from '../AddImage/AddImage';
@@ -13,6 +14,8 @@ const UpdateProject = ({ project, onSubmit }) => {
   const [startDate, setStartDate] = useState(new Date(project.startDate));
   const [endDate, setEndDate] = useState(new Date(project.endDate));
   const [paid, setPaid] = useState(null);
+
+  const { deleteFile } = useFileUpload();
 
   const { register, setValue, watch, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -29,6 +32,7 @@ const UpdateProject = ({ project, onSubmit }) => {
   console.log(project)
 
   const [updateProject] = useMutation(UPDATE_PROJECT);
+  const [deleteProject] = useMutation(DELETE_PROJECT);
 
   const handleStartDateChange = (date) => {
     console.log('Selected start date:', date);
@@ -88,6 +92,24 @@ const UpdateProject = ({ project, onSubmit }) => {
     }
   };
 
+  const images = project.images;
+  console.log("images:", images)
+
+  const handleDelete = async (projectId) => {
+    try {
+      const imageUrls = images.map((url) => url);
+      await Promise.all(imageUrls.map((url) => deleteFile(url))); // delete all images in parallel
+      await deleteProject({
+        variables: { id: projectId },
+      });
+      window.location.replace('/all-projects')
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+
+
   return (
     <>
       {showForm && (
@@ -144,11 +166,12 @@ const UpdateProject = ({ project, onSubmit }) => {
           </select>
           <div>
             <label htmlFor="images">Images:</label>
-            <AddImage projectId={project.id}/>
+            <AddImage projectId={project.id} />
           </div>
 
           <div className="form-buttons">
             <button type="submit">Update Project</button>
+            <button type="button" onClick={() => handleDelete(project.id)}>Delete Project</button>
             <button type="button" onClick={() => onSubmit()}>Cancel</button>
           </div>
         </form>

@@ -124,6 +124,14 @@ export const ADD_PROJECT_IMAGE = gql`
   }
 `
 
+export const DELETE_PROJECT = gql`
+  mutation deleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      id
+    }
+  }
+`
+
 export const LOGIN_USER = gql`
       mutation login(
         $email: String!

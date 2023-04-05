@@ -134,15 +134,17 @@ const resolvers = {
         },
         deleteProject: async (_, { id }) => {
             try {
-                const deletedProject = await Project.findByIdAndDelete(id).populate(
-                    'client'
-                );
-                return deletedProject;
+              const deletedProject = await Project.findByIdAndDelete(id);
+              const client = await Client.findByIdAndUpdate(
+                deletedProject.clientId,
+                { $pull: { projects: deletedProject._id } }
+              );
+              return deletedProject;
             } catch (err) {
-                console.error(err);
-                throw err;
+              console.error(err);
+              throw err;
             }
-        },
+          },
         addUser: async (parent, { name, email, password, avatar }) => {
             if (!avatar) {
                 avatar = ''

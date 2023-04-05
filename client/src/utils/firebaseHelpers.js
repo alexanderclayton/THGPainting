@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyB0-X_YQW9qpBsPA2TZN0BI__onn5MAdg4",
@@ -42,9 +42,20 @@ export function useFileUpload() {
         console.log("downloadURL:", downloadURL)
 
         return downloadURL;
-    }
+    };
 
-    return { fileUpload, storage };
+    const deleteFile = async (url) => {
+        try {
+          const storageRef = ref(storage, url);
+          await deleteObject(storageRef);
+          console.log(`File at URL ${url} deleted successfully`);
+        } catch (error) {
+          console.error(`Error deleting file at URL ${url}:`, error);
+          throw new Error(`Error deleting file at URL ${url}: ${error.message}`);
+        }
+    };
+
+    return { fileUpload, storage, deleteFile };
 }
 
 
