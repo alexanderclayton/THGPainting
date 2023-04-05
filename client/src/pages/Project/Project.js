@@ -47,7 +47,10 @@ const Project = () => {
             <p>End Date: {endingDate}</p>
             <p>Paid: {isItPaid}</p>
             <p>Payment Type: {data?.getProject?.paymentType}</p>
-            <p>Images: {data?.getProject?.images}</p>
+            <p>Images:</p>
+            {data?.getProject?.images.map((image) => (
+                <img src={image} style={{ width: '200px', height: 'auto' }} alt="current project" key={image} />
+            ))}
             {showUpdateProjectForm && (
             <UpdateProject
                 project={data?.getProject}
