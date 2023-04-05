@@ -97,15 +97,22 @@ const resolvers = {
         },
         deleteClient: async (_, { id }) => {
             try {
-                const deletedClient = await Client.findByIdAndDelete(id).populate(
-                    'projects'
-                );
-                return deletedClient;
+              const deletedClient = await Client.findByIdAndDelete(id);
+              if (!deletedClient) {
+                throw new Error('Client not found.');
+              }
+              // delete all projects associated with the client
+              const deletedProjects = await Project.deleteMany({
+                clientId: deletedClient.id
+              });
+              console.log(`Deleted ${deletedProjects.deletedCount} projects.`);
+              return deletedClient;
             } catch (err) {
-                console.error(err);
-                throw err;
+              console.error(err);
+              throw err;
             }
         },
+          
         addProject: async (_, { description, startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
             try {
                 const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images });
@@ -117,8 +124,6 @@ const resolvers = {
                 throw err;
             }
         },
-
-
         updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, paymentType }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(

@@ -46,6 +46,14 @@ export const UPDATE_CLIENT = gql`
   }
 `;
 
+export const DELETE_CLIENT = gql`
+  mutation deleteClient($id: ID!) {
+    deleteClient(id: $id) {
+      id
+    }
+  }
+`
+
 export const ADD_PROJECT = gql`
   mutation addProject(
     $description: String!
