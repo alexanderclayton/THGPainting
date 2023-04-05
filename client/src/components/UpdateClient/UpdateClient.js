@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
-import { UPDATE_CLIENT } from '../../utils/mutations';
+import { UPDATE_CLIENT, DELETE_CLIENT } from '../../utils/mutations';
 import '../UpdateClient/UpdateClient.css';
 
 const UpdateClient = ({ client, onSubmit }) => {
@@ -17,6 +17,7 @@ const UpdateClient = ({ client, onSubmit }) => {
   });
 
   const [updateClient] = useMutation(UPDATE_CLIENT);
+  const [deleteClient] = useMutation(DELETE_CLIENT);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -40,6 +41,20 @@ const UpdateClient = ({ client, onSubmit }) => {
       console.error(error);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteClient({
+        variables: {
+          id: id,
+        },
+      });
+      window.location.replace('/all-clients');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <>
@@ -76,6 +91,7 @@ const UpdateClient = ({ client, onSubmit }) => {
             <span>Phone Number is required</span>
           )}
           <button type="submit">Update Client</button>
+          <button type="button" onClick={() => handleDelete(client.id)}>Delete Client</button>
         </form>
       )}
       {updateSuccessful && (

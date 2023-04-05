@@ -46,6 +46,14 @@ export const UPDATE_CLIENT = gql`
   }
 `;
 
+export const DELETE_CLIENT = gql`
+  mutation deleteClient($id: ID!) {
+    deleteClient(id: $id) {
+      id
+    }
+  }
+`
+
 export const ADD_PROJECT = gql`
   mutation addProject(
     $description: String!
@@ -120,6 +128,14 @@ export const ADD_PROJECT_IMAGE = gql`
   mutation addProjectImage($downloadURL: String!, $projectId: ID!) {
     addProjectImage(downloadURL: $downloadURL, projectId: $projectId) {
       images
+    }
+  }
+`
+
+export const DELETE_PROJECT = gql`
+  mutation deleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      id
     }
   }
 `
