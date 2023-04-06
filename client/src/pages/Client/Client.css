@@ -1,3 +1,8 @@
+.client {
+    display: flex;
+    flex-direction: row;
+}
+
 .project-card {
     border: solid black 3px;
 }

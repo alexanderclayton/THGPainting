@@ -4,6 +4,7 @@ import { GET_CLIENT } from '../../utils/queries';
 import { useParams, Link } from 'react-router-dom';
 import AddProject from '../../components/AddProject/AddProject';
 import UpdateClient from '../../components/UpdateClient/UpdateClient';
+import Sidebar from '../../components/Sidebar/Sidebar'
 import './Client.css';
 
 const Client = () => {
@@ -33,33 +34,36 @@ const Client = () => {
   console.log("data:", data?.getClient.projects)
 
   return (
-    <div>
-      <p>Client: {data?.getClient?.name}</p>
-      <p>Address: {data?.getClient?.address}</p>
-      <p>Email: {data?.getClient?.email}</p>
-      <p>Phone Number: {data?.getClient?.phoneNumber}</p>
-      <p>Projects:</p>
-      {data.getClient.projects.map((project) => (
-        <Link to={`../all-projects/project/${project.id}`} className="project-card" key={project.id}>
-          <p>{project.startDate}</p>
-          <p>{project.endDate}</p>
-        </Link>
-      ))}
-      {showUpdateClientForm && (
-        <UpdateClient
-          client={data?.getClient}
-          onSubmit={() => handleUpdateClientFormSubmit()}
-        />
-      )}
-      {showUpdateClientButton && (
-        <button onClick={() => handleUpdateClientButtonClick()}>
-          Update Client
+    <div className="client">
+      <Sidebar />
+      <div>
+        <p>Client: {data?.getClient?.name}</p>
+        <p>Address: {data?.getClient?.address}</p>
+        <p>Email: {data?.getClient?.email}</p>
+        <p>Phone Number: {data?.getClient?.phoneNumber}</p>
+        <p>Projects:</p>
+        {data.getClient.projects.map((project) => (
+          <Link to={`../all-projects/project/${project.id}`} className="project-card" key={project.id}>
+            <p>{project.startDate}</p>
+            <p>{project.endDate}</p>
+          </Link>
+        ))}
+        {showUpdateClientForm && (
+          <UpdateClient
+            client={data?.getClient}
+            onSubmit={() => handleUpdateClientFormSubmit()}
+          />
+        )}
+        {showUpdateClientButton && (
+          <button onClick={() => handleUpdateClientButtonClick()}>
+            Update Client
+          </button>
+        )}
+        {showAddProjectForm && <AddProject clientId={data?.getClient?.id} />}
+        <button onClick={() => setShowAddProjectForm(!showAddProjectForm)}>
+          {showAddProjectForm ? 'cancel' : 'Add Project'}
         </button>
-      )}
-      {showAddProjectForm && <AddProject clientId={data?.getClient?.id} />}
-      <button onClick={() => setShowAddProjectForm(!showAddProjectForm)}>
-        {showAddProjectForm ? 'cancel' : 'Add Project'}
-      </button>
+      </div>
     </div>
   );
 };

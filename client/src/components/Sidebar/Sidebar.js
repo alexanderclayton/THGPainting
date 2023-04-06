@@ -4,10 +4,10 @@ import '../Sidebar/Sidebar.css';
 
 const Sidebar = () => {
     return (
-        <nav>
-            <li><Link to="/userpage">Userpage</Link></li>
-            <li><Link to="/all-projects">All Projects</Link></li>
-            <li><Link to="/all-clients">All Clients</Link></li>
+        <nav className="sidebar">
+            <li><Link className="sidebar-link" to="/userpage">Userpage</Link></li>
+            <li><Link className="sidebar-link" to="/all-projects">All Projects</Link></li>
+            <li><Link className="sidebar-link" to="/all-clients">All Clients</Link></li>
         </nav>
     )
 };

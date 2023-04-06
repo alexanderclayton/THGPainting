@@ -1,3 +1,8 @@
+.all-clients {
+    display: flex;
+    flex-direction: row;
+}
+
 .client-card {
     border: solid black 2px;
 }
