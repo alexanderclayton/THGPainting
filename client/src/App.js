@@ -21,9 +21,6 @@ import AllProjects from './pages/AllProjects/AllProjects';
 import Project from './pages/Project/Project';
 import AllClients from './pages/AllClients/AllClients';
 import Client from './pages/Client/Client';
-
-
-
 import './App.css';
 
 const httpLink = createHttpLink({

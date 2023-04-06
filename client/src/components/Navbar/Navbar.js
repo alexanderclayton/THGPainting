@@ -15,15 +15,15 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/why-thg">Why THG?</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
-            {authServiceInstance.loggedIn() || <li><Link to="/login">Login</Link></li>}
+        <nav className="navbar">
+            <li><Link className="navbar-link" to="/">Home</Link></li>
+            <li><Link className="navbar-link" to="/about">About Us</Link></li>
+            <li><Link className="navbar-link" to="/why-thg">Why THG?</Link></li>
+            <li><Link className="navbar-link" to="/contact">Contact Us</Link></li>
+            {authServiceInstance.loggedIn() || <li><Link className="navbar-link" to="/login">Login</Link></li>}
             
             {authServiceInstance.loggedIn() && (
-                <li><button onClick={handleLogout}>Logout</button></li>
+                <li><button className="logout" onClick={handleLogout}>Logout</button></li>
             )}
         </nav>
     )
