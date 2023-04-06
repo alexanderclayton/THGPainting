@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    align-items: row;
+    justify-content: space-between;
+    padding: 1.5rem;
+    list-style-type: none;
+    background-color: rgb(125, 125, 129);
+}
+
+.navbar-link {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: darkblue
+}
+
+.logout {
+    height: 1.5rem;
+    color: darkblue;
+}
+
+.logout:hover {
+    cursor: pointer;
+}
