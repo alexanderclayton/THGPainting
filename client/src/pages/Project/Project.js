@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import { GET_PROJECT } from '../../utils/queries';
 import { useParams } from 'react-router-dom';
 import UpdateProject from '../../components/UpdateProject/UpdateProject';
+import Sidebar from '../../components/Sidebar/Sidebar'
+import '../Project/Project.css'
 
 const Project = () => {
     const [showUpdateProjectForm, setShowUpdateProjectForm] = useState(false);
@@ -16,7 +18,7 @@ const Project = () => {
 
     const startingDate = new Date(data?.getProject?.startDate).toLocaleDateString();
     const endingDate = new Date(data?.getProject?.endDate).toLocaleDateString();
-    
+
     let isItPaid;
     if (data?.getProject?.paid === true) {
         isItPaid = "Yes"
@@ -40,28 +42,31 @@ const Project = () => {
     console.log(data)
 
     return (
-        <div>
-            <p>Description: {data?.getProject?.description}</p>
-            <p>Project Type: {data?.getProject?.projectType}</p>
-            <p>Start Date: {startingDate}</p>
-            <p>End Date: {endingDate}</p>
-            <p>Paid: {isItPaid}</p>
-            <p>Payment Type: {data?.getProject?.paymentType}</p>
-            <p>Images:</p>
-            {data?.getProject?.images.map((image) => (
-                <img src={image} style={{ width: '200px', height: 'auto' }} alt="current project" key={image} />
-            ))}
-            {showUpdateProjectForm && (
-            <UpdateProject
-                project={data?.getProject}
-                onSubmit={() => handleUpdateProjectFormSubmit()}
-            />
-            )}
-            {showUpdateProjectButton && (
-                <button onClick={() => handleUpdateProjectButtonClick()}>
-                    Update Project
-                </button>
-            )}
+        <div className="project">
+            <Sidebar />
+            <div>
+                <p>Description: {data?.getProject?.description}</p>
+                <p>Project Type: {data?.getProject?.projectType}</p>
+                <p>Start Date: {startingDate}</p>
+                <p>End Date: {endingDate}</p>
+                <p>Paid: {isItPaid}</p>
+                <p>Payment Type: {data?.getProject?.paymentType}</p>
+                <p>Images:</p>
+                {data?.getProject?.images.map((image) => (
+                    <img src={image} style={{ width: '200px', height: 'auto' }} alt="current project" key={image} />
+                ))}
+                {showUpdateProjectForm && (
+                    <UpdateProject
+                        project={data?.getProject}
+                        onSubmit={() => handleUpdateProjectFormSubmit()}
+                    />
+                )}
+                {showUpdateProjectButton && (
+                    <button onClick={() => handleUpdateProjectButtonClick()}>
+                        Update Project
+                    </button>
+                )}
+            </div>
         </div>
     )
 }

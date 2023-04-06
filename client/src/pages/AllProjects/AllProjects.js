@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_PROJECTS } from '../../utils/queries';
 import { Link } from 'react-router-dom';
+import Sidebar from '../../components/Sidebar/Sidebar'
 import './AllProjects.css';
 
 const AllProjects = () => {
@@ -12,18 +13,21 @@ const AllProjects = () => {
     if (error) return <p>{error.message}</p>
 
     return (
-        <div>
-            <p>All Projects</p>
-            {data.getProjects.map(project => (
-                <Link to={`project/${project.id}`} className='all-project-card' key={project.id}>
-                    <p>{project.description}</p>
-                    <p>{project.startDate}</p>
-                    <p>{project.endDate}</p>
-                    <p>{project.projectType}</p>
-                    <p>{project.paid}</p>
-                    <p>{project.paymentType}</p>
-                </Link>
-            ))}
+        <div className="all-projects">
+            <Sidebar />
+            <div>
+                <p>All Projects</p>
+                {data.getProjects.map(project => (
+                    <Link to={`project/${project.id}`} className='all-project-card' key={project.id}>
+                        <p>{project.description}</p>
+                        <p>{project.startDate}</p>
+                        <p>{project.endDate}</p>
+                        <p>{project.projectType}</p>
+                        <p>{project.paid}</p>
+                        <p>{project.paymentType}</p>
+                    </Link>
+                ))}
+            </div>
         </div>
     )
 }
