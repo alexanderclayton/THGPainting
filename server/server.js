@@ -10,12 +10,13 @@ import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js'
 import db from './config/connection.js';
 
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: authMiddleware, clientMiddleware,
+    context: { authMiddleware, clientMiddleware, }
   });
 
 app.use(express.urlencoded({ extended: false }));
@@ -31,11 +32,10 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
-};
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
 
 const startApolloServer = async () => {
     await server.start();
