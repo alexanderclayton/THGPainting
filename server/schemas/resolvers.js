@@ -8,7 +8,7 @@ import { signToken } from '../utils/authMiddleware.js';
 
 const resolvers = {
     Query: {
-        getClients: async (parent, { userId }, context) => {
+        getClients: async (parent, { }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be an authorized user to view this page.');
             }

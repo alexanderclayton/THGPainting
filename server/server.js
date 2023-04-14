@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
@@ -13,10 +12,11 @@ import db from './config/connection.js';
 const __dirname = path.resolve();
 const PORT = process.env.PORT || 3001;
 const app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: { authMiddleware, clientMiddleware, }
+  context: authMiddleware, clientMiddleware,
 });
 
 console.log( "dirname:", __dirname);
