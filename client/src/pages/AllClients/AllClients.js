@@ -27,7 +27,7 @@ const AllClients = () => {
     return (
         <div className="all-clients">
             <Sidebar />
-            <div>
+            <div className="bg-red-700">
                 <p>All Clients</p>
                 {data.getClients.map(client => (
                     <Link to={`client/${client.id}`} className="client-card" key={client.id}>

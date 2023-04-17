@@ -104,7 +104,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
     <form onSubmit={handleSubmit}>
       <div className='form-group'>
         <label htmlFor='description'>Project Description</label>
-        <input type='text' {...register('description')} />
+        <input className="border" type='text' {...register('description')} />
         {errors.description && <span>{errors.description.message}</span>}
       </div>
       <div className="form-group">
@@ -116,7 +116,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
           onBlur={handleStartDateBlur}
           dateFormat="MM/dd/yyyy"
           minDate={new Date()}
-          className={`form-control ${errors.startDate ? "is-invalid" : ""}`}
+          className={`form-control border ${errors.startDate ? "is-invalid" : ""}`}
         />
         {errors.startDate && (
           <div className="invalid-feedback">{errors.startDate.message}</div>
@@ -131,7 +131,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
           onBlur={handleEndDateBlur}
           dateFormat="MM/dd/yyyy"
           minDate={startDate}
-          className={`form-control ${errors.endDate ? "is-invalid" : ""}`}
+          className={`form-control border ${errors.endDate ? "is-invalid" : ""}`}
         />
         {errors.endDate && (
           <div className="invalid-feedback">{errors.endDate.message}</div>
@@ -170,7 +170,7 @@ const AddProject = ({ clientId, onFormSubmit }) => {
         {errors.paid && <span>{errors.paid.message}</span>}
       </div>
 
-      <button type="submit">Add Project</button>
+      <button className="border" type="submit">Add Project</button>
     </form>
   );
 };

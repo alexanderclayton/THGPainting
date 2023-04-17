@@ -12,12 +12,3 @@
     font-size: 1.5rem;
     color: darkblue
 }
-
-.logout {
-    height: 1.5rem;
-    color: darkblue;
-}
-
-.logout:hover {
-    cursor: pointer;
-}
