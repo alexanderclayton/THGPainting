@@ -55,12 +55,12 @@ const Client = () => {
           />
         )}
         {showUpdateClientButton && (
-          <button onClick={() => handleUpdateClientButtonClick()}>
+          <button className="h-10 px-5 m-2 text-red-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800" onClick={() => handleUpdateClientButtonClick()}>
             Update Client
           </button>
         )}
         {showAddProjectForm && <AddProject clientId={data?.getClient?.id} />}
-        <button onClick={() => setShowAddProjectForm(!showAddProjectForm)}>
+        <button className="h-10 px-5 m-2 text-red-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800" onClick={() => setShowAddProjectForm(!showAddProjectForm)}>
           {showAddProjectForm ? 'cancel' : 'Add Project'}
         </button>
       </div>
