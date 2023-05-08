@@ -23,6 +23,10 @@ const projectSchema = new mongoose.Schema({
     enum: ['PAINTING', 'CHRISTMAS_LIGHTS', 'OTHER'],
     required: true,
   },
+  paintColors: {
+    type: [String],
+    required: false,
+  },
   paid: {
     type: Boolean,
     required: true,

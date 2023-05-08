@@ -11,6 +11,7 @@ const typeDefs = gql`
     email: String!
     phoneNumber: String!
     projects: [Project]
+    homePhoto: [String]
   }
   
   type Project {
@@ -23,6 +24,7 @@ const typeDefs = gql`
     paid: Boolean!
     paymentType: PaymentType!
     images: [String]
+    paintColors: [String]
   }
   
   enum ProjectType {
@@ -67,13 +69,14 @@ const typeDefs = gql`
   
   type Mutation {
     addClient(name: String!, address: String!, email: String!, phoneNumber: String!): Client!
-    updateClient(id: ID!, name: String, address: String, email: String, phoneNumber: String): Client
+    updateClient(id: ID!, name: String, address: String, email: String, phoneNumber: String, homePhoto: [String]): Client
     deleteClient(id: ID!): Client
     addUser(name: String!, email: String!, password: String!, avatar: String): User
     addProjectImage(downloadURL: String!, projectId: ID!): Project
+    addHomePhoto(downloadURL: String!, clientId: ID!): Client
   
-    addProject(description: String!, startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String]): Project
-    updateProject(id: ID!, description: String!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String]): Project
+    addProject(description: String!, startDate: Date!, endDate: Date, clientId: ID!, projectType: ProjectType!, paid: Boolean!, paymentType: PaymentType, images: [String], paintColors: [String]): Project
+    updateProject(id: ID!, description: String!, startDate: Date, endDate: Date, clientId: ID, projectType: ProjectType, paid: Boolean, paymentType: PaymentType, images: [String], paintColors: [String]): Project
     deleteProject(id: ID!): Project
   
     register(name: String!, email: String!, password: String!, avatar: String): User!

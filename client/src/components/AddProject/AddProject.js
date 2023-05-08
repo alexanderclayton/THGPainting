@@ -15,7 +15,8 @@ const schema = yup.object().shape({
   projectType: yup.string().required(),
   paid: yup.boolean().required(),
   paymentType: yup.string(),
-  images: yup.string()
+  images: yup.string(),
+  paintColors: yup.string()
 });
 
 const AddProject = ({ clientId, onFormSubmit }) => {

@@ -29,6 +29,7 @@ export const GET_CLIENT = gql`
       address
       email
       phoneNumber
+      homePhoto
       projects {
         id
         startDate
