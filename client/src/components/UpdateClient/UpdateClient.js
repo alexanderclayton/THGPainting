@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { UPDATE_CLIENT, DELETE_CLIENT } from '../../utils/mutations';
 import '../UpdateClient/UpdateClient.css';
+import AddHomePhoto from '../AddHomePhoto/AddHomePhoto';
 
 const UpdateClient = ({ client, onSubmit }) => {
   const [updateSuccessful, setUpdateSuccessful] = useState(false);
@@ -90,6 +91,10 @@ const UpdateClient = ({ client, onSubmit }) => {
           {errors.phoneNumber && (
             <span>Phone Number is required</span>
           )}
+          <div>
+            <label htmlFor='homePhotos'>Home Photos:</label>
+            <AddHomePhoto clientId={client.id} />
+          </div>
           <button type="submit">Update Client</button>
           <button type="button" onClick={() => handleDelete(client.id)}>Delete Client</button>
         </form>

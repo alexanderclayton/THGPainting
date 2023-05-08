@@ -132,6 +132,14 @@ export const ADD_PROJECT_IMAGE = gql`
   }
 `
 
+export const ADD_CLIENT_HOME_PHOTO = gql`
+  mutation addHomePhoto($downloadURL: String!, $clientId: ID!) {
+    addHomePhoto(downloadURL: $downloadURL, clientId: $clientId) {
+      homePhoto
+    }
+  }
+`
+
 export const DELETE_PROJECT = gql`
   mutation deleteProject($id: ID!) {
     deleteProject(id: $id) {

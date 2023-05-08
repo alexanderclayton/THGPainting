@@ -3,8 +3,6 @@ import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
 import { authMiddleware } from './utils/authMiddleware.js';
 import { clientMiddleware } from './utils/clientMiddleware.js';
-
-
 import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js'
 import db from './config/connection.js';

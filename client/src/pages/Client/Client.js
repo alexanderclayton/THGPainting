@@ -31,7 +31,7 @@ const Client = () => {
     setShowUpdateClientButton(false);
   };
 
-  console.log("data:", data?.getClient.projects)
+  console.log("data:", data?.getClient.homePhoto)
 
   return (
     <div className="client">
@@ -41,6 +41,10 @@ const Client = () => {
         <p>Address: {data?.getClient?.address}</p>
         <p>Email: {data?.getClient?.email}</p>
         <p>Phone Number: {data?.getClient?.phoneNumber}</p>
+        <p>Photos:</p>
+        {data?.getClient?.homePhoto.map((image) => (
+          <img src={image} style={{width: '200px', height: 'auto' }} alt='clients home' key={image} />
+        ))}
         <p>Projects:</p>
         {data.getClient.projects.map((project) => (
           <Link to={`../all-projects/project/${project.id}`} className="project-card" key={project.id}>

@@ -72,9 +72,9 @@ const resolvers = {
         },
     },
     Mutation: {
-        addClient: async (_, { name, address, email, phoneNumber }) => {
+        addClient: async (_, { name, address, email, phoneNumber, homePhoto }) => {
             try {
-                const client = new Client({ name, address, email, phoneNumber });
+                const client = new Client({ name, address, email, phoneNumber, homePhoto });
                 await client.save();
                 return client;
             } catch (err) {
@@ -97,25 +97,25 @@ const resolvers = {
         },
         deleteClient: async (_, { id }) => {
             try {
-              const deletedClient = await Client.findByIdAndDelete(id);
-              if (!deletedClient) {
-                throw new Error('Client not found.');
-              }
-              // delete all projects associated with the client
-              const deletedProjects = await Project.deleteMany({
-                clientId: deletedClient.id
-              });
-              console.log(`Deleted ${deletedProjects.deletedCount} projects.`);
-              return deletedClient;
+                const deletedClient = await Client.findByIdAndDelete(id);
+                if (!deletedClient) {
+                    throw new Error('Client not found.');
+                }
+                // delete all projects associated with the client
+                const deletedProjects = await Project.deleteMany({
+                    clientId: deletedClient.id
+                });
+                console.log(`Deleted ${deletedProjects.deletedCount} projects.`);
+                return deletedClient;
             } catch (err) {
-              console.error(err);
-              throw err;
+                console.error(err);
+                throw err;
             }
         },
-          
-        addProject: async (_, { description, startDate, endDate, projectType, paid, paymentType, images, clientId }) => {
+
+        addProject: async (_, { description, startDate, endDate, projectType, paid, paymentType, images, paintColors, clientId }) => {
             try {
-                const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images });
+                const project = new Project({ description, startDate, endDate, clientId, projectType, paid, paymentType, images, paintColors });
                 await project.save();
                 const client = await Client.findByIdAndUpdate(clientId.toString(), { $push: { projects: project.id } });
                 return project;
@@ -124,11 +124,12 @@ const resolvers = {
                 throw err;
             }
         },
-        updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, paymentType }) => {
+
+        updateProject: async (_, { id, description, startDate, endDate, clientId, projectType, paid, paymentType, paintColors }) => {
             try {
                 const updatedProject = await Project.findByIdAndUpdate(
                     id,
-                    { description, startDate, endDate, clientId, projectType, paid, paymentType },
+                    { description, startDate, endDate, clientId, projectType, paid, paymentType, paintColors },
                     { new: true }
                 );
                 return updatedProject;
@@ -137,19 +138,20 @@ const resolvers = {
                 throw err;
             }
         },
+
         deleteProject: async (_, { id }) => {
             try {
-              const deletedProject = await Project.findByIdAndDelete(id);
-              const client = await Client.findByIdAndUpdate(
-                deletedProject.clientId,
-                { $pull: { projects: deletedProject._id } }
-              );
-              return deletedProject;
+                const deletedProject = await Project.findByIdAndDelete(id);
+                const client = await Client.findByIdAndUpdate(
+                    deletedProject.clientId,
+                    { $pull: { projects: deletedProject._id } }
+                );
+                return deletedProject;
             } catch (err) {
-              console.error(err);
-              throw err;
+                console.error(err);
+                throw err;
             }
-          },
+        },
         addUser: async (parent, { name, email, password, avatar }) => {
             if (!avatar) {
                 avatar = ''
@@ -175,30 +177,46 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        addProjectImage: async (_, {projectId, downloadURL }, context) => {
+        addProjectImage: async (_, { projectId, downloadURL }, context) => {
             // First, check if the user is authenticated
             console.log("projectId:", typeof projectId, projectId)
             if (!context.user) {
-              throw new AuthenticationError('User must be authenticated');
+                throw new AuthenticationError('User must be authenticated');
             }
             if (!mongoose.Types.ObjectId.isValid(projectId)) {
                 throw new UserInputError('Invalid projectId');
-              }
+            }
             // Then, find the project with the given projectId
             const project = await Project.findById(projectId);
-          
+
             // If project not found, throw an error
             if (!project) {
-              throw new UserInputError('Project not found');
+                throw new UserInputError('Project not found');
             }
-          
+
             // Push the downloadURL to the images array and save the project
             project.images.push(downloadURL);
             const updatedProject = await project.save();
-          
+
             return updatedProject;
-          }
-          
+        },
+        addHomePhoto: async (_, { clientId, downloadURL }, context) => {
+            console.log("clientId:", typeof clientId, clientId)
+            if (!context.user) {
+                throw new AuthenticationError('User must be authenticated');
+            }
+            if (!mongoose.Types.ObjectId.isValid(clientId)) {
+                throw new UserInputError('Invalid clientId');
+            }
+            const client = await Client.findById(clientId);
+            if (!client) {
+                throw new UserInputError('Client not found');
+            }
+            client.homePhoto.push(downloadURL);
+            const updatedClient = await client.save();
+
+            return updatedClient; 
+        }
     },
 };
 
