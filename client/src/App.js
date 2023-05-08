@@ -11,6 +11,7 @@ import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import WhyTHG from './pages/WhyTHG/WhyTHG';
+import Gallery from './pages/Gallery/Gallery';
 import Contact from './pages/Contact/Contact';
 import Login from './pages/Login/Login';
 import Logout from './pages/Logout/Logout';
@@ -50,7 +51,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/why-thg" element={<WhyTHG />} />
+          <Route path="/why-thg" element={<WhyTHG />} />\
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />

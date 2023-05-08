@@ -31,7 +31,7 @@ const Client = () => {
     setShowUpdateClientButton(false);
   };
 
-  console.log("data:", data?.getClient.homePhoto)
+  console.log("photoURL:", data?.getClient.homePhoto)
 
   return (
     <div className="client">
